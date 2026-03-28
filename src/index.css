@@ -1,0 +1,158 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --signal-green: #00ff88;
+    --signal-cyan: #00d4ff;
+    --signal-amber: #ffb800;
+    --signal-red: #ff4444;
+    --navy-950: #020818;
+    --navy-900: #050d1a;
+    --navy-800: #091425;
+    --navy-700: #0d1f38;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background-color: var(--navy-950);
+    color: white;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: rgba(0, 255, 136, 0.2);
+    color: #00ff88;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--navy-900);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(0, 255, 136, 0.3);
+    border-radius: 2px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 255, 136, 0.6);
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply relative inline-flex items-center justify-center px-6 py-3 font-mono font-semibold text-navy-950 bg-signal-green rounded-lg transition-all duration-200 hover:brightness-110 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center px-4 py-2 font-mono text-sm text-signal-green border border-signal-green/30 rounded-lg hover:bg-signal-green/10 transition-all duration-200;
+  }
+
+  .card {
+    @apply bg-navy-800 border border-white/5 rounded-xl p-4;
+  }
+
+  .metric-value {
+    @apply font-mono font-bold text-signal-green tabular-nums;
+  }
+
+  .tag {
+    @apply inline-flex items-center px-2 py-0.5 rounded text-xs font-mono font-medium;
+  }
+
+  .glow-green {
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.3), 0 0 60px rgba(0, 255, 136, 0.1);
+  }
+
+  .glow-cyan {
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3), 0 0 60px rgba(0, 212, 255, 0.1);
+  }
+
+  .grid-bg {
+    background-image:
+      linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+}
+
+/* Leaflet overrides */
+.leaflet-container {
+  background: #020818 !important;
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+.leaflet-popup-content-wrapper {
+  background: #091425 !important;
+  border: 1px solid rgba(0, 255, 136, 0.2) !important;
+  border-radius: 12px !important;
+  color: white !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 255, 136, 0.1) !important;
+}
+
+.leaflet-popup-tip {
+  background: #091425 !important;
+}
+
+.leaflet-popup-close-button {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.leaflet-popup-close-button:hover {
+  color: #00ff88 !important;
+}
+
+.leaflet-control-zoom {
+  border: 1px solid rgba(0, 255, 136, 0.2) !important;
+  background: #091425 !important;
+  border-radius: 8px !important;
+  overflow: hidden;
+}
+
+.leaflet-control-zoom a {
+  background: #091425 !important;
+  color: rgba(255, 255, 255, 0.7) !important;
+  border-bottom: 1px solid rgba(0, 255, 136, 0.1) !important;
+}
+
+.leaflet-control-zoom a:hover {
+  background: rgba(0, 255, 136, 0.1) !important;
+  color: #00ff88 !important;
+}
+
+.leaflet-control-attribution {
+  background: rgba(2, 8, 24, 0.8) !important;
+  color: rgba(255, 255, 255, 0.3) !important;
+  font-size: 10px !important;
+}
+
+.leaflet-control-attribution a {
+  color: rgba(0, 255, 136, 0.5) !important;
+}
+
+/* Cluster marker styles */
+.marker-cluster-small,
+.marker-cluster-medium,
+.marker-cluster-large {
+  background-color: rgba(0, 255, 136, 0.15) !important;
+}
+
+.marker-cluster-small div,
+.marker-cluster-medium div,
+.marker-cluster-large div {
+  background-color: rgba(0, 255, 136, 0.4) !important;
+  color: #020818 !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-weight: 700 !important;
+}
