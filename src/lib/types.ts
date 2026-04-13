@@ -25,9 +25,10 @@ export interface HeatmapPoint {
   downloadMbps: number
   uploadMbps: number
   pingMs: number
-  provider: string
-  networkType: string
-  createdAt: string
+  provider: string | null
+  networkType: string | null
+  createdAt: string | null
+  source: 'baseline' | 'crowdsourced'
 }
 
 export interface MapFilters {
@@ -35,8 +36,9 @@ export interface MapFilters {
   networkType: string  // '' | '4G' | '5G'
   period: string       // '24h' | '7d' | 'all'
   timeOfDay: string    // '' | 'morning' | 'afternoon' | 'evening' | 'night'
+  includeBaseline: boolean
   heatMetric: 'downloadMbps' | 'uploadMbps' | 'pingMs'
-  viewMode: 'heatmap' | 'markers'
+  viewMode: 'heatmap' | 'pixels'
 }
 
 export const PROVIDERS: Provider[] = ['MTN', 'Glo', 'Airtel', '9mobile']

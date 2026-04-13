@@ -10,15 +10,14 @@ interface MarkersLayerProps {
 function makeIcon(color: string) {
   return L.divIcon({
     html: `<div style="
-      width:10px;height:10px;
-      border-radius:50%;
+      width:14px;height:14px;
       background:${color};
-      border:2px solid rgba(255,255,255,0.3);
-      box-shadow:0 0 6px ${color}80;
+      border:2px solid rgba(255,255,255,0.4);
+      box-shadow:0 0 8px ${color}a0, inset 0 0 4px rgba(0,0,0,0.3);
     "></div>`,
     className: '',
-    iconSize: [10, 10],
-    iconAnchor: [5, 5],
+    iconSize: [14, 14],
+    iconAnchor: [7, 7],
   })
 }
 
@@ -61,7 +60,7 @@ export default function MarkersLayer({ points }: MarkersLayerProps) {
                   <span className="text-signal-amber font-semibold">{p.pingMs.toFixed(0)} ms</span>
                 </div>
                 <div className="pt-1 border-t border-white/10 text-white/30 text-xs">
-                  {formatTime(p.createdAt)}
+                  {p.createdAt ? formatTime(p.createdAt) : `${p.source}`}
                 </div>
               </div>
             </Popup>

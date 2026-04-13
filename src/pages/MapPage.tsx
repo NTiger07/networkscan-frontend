@@ -6,7 +6,7 @@ import 'leaflet/dist/leaflet.css'
 
 import MapSidebar from '../components/MapSidebar'
 import HeatmapLayer from '../components/HeatmapLayer'
-import MarkersLayer from '../components/MarkersLayer'
+import PixelGridLayer from '../components/PixelGridLayer'
 import MyLocationControl from '../components/MyLocationControl'
 import StatsBar from '../components/StatsBar'
 import { useSocket } from '../hooks/useSocket'
@@ -18,8 +18,9 @@ const DEFAULT_FILTERS: MapFilters = {
   networkType: '',
   period: 'all',
   timeOfDay: '',
+  includeBaseline: true,
   heatMetric: 'downloadMbps',
-  viewMode: 'heatmap',
+  viewMode: 'pixels',
 }
 
 // Nigeria center
@@ -68,6 +69,7 @@ export default function MapPage() {
       provider: test.provider,
       networkType: test.networkType,
       createdAt: test.createdAt,
+      source: 'crowdsourced',
     }
 
     // Only add if it matches current filters
@@ -159,6 +161,8 @@ export default function MapPage() {
           <MapContainer
             center={NIGERIA_CENTER}
             zoom={NIGERIA_ZOOM}
+            maxBounds={[[4.0, 2.7], [13.9, 14.6]]}
+            minZoom={5}
             style={{ width: '100%', height: '100%' }}
             zoomControl={true}
             attributionControl={true}
@@ -174,8 +178,8 @@ export default function MapPage() {
             {filters.viewMode === 'heatmap' && (
               <HeatmapLayer points={points} metric={filters.heatMetric} />
             )}
-            {filters.viewMode === 'markers' && (
-              <MarkersLayer points={points} />
+            {filters.viewMode === 'pixels' && (
+              <PixelGridLayer points={points} metric={filters.heatMetric} />
             )}
 
             {/* My location control */}

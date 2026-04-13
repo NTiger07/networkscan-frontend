@@ -49,18 +49,18 @@ export default function MapSidebar({ filters, onChange, totalPoints, liveCount }
         {/* View Mode */}
         <div>
           <label className="block text-xs font-mono text-white/30 uppercase tracking-widest mb-2">View</label>
-          <div className="flex gap-2">
+          <div className="flex flex-col gap-1.5">
+            <button className={CHIP(filters.viewMode === 'pixels')} onClick={() => setView('pixels')}>
+              Pixel Map
+            </button>
             <button className={CHIP(filters.viewMode === 'heatmap')} onClick={() => setView('heatmap')}>
               Heatmap
-            </button>
-            <button className={CHIP(filters.viewMode === 'markers')} onClick={() => setView('markers')}>
-              Markers
             </button>
           </div>
         </div>
 
-        {/* Heat Metric (only for heatmap) */}
-        {filters.viewMode === 'heatmap' && (
+        {/* Heat Metric (only for heatmap & pixels) */}
+        {(filters.viewMode === 'heatmap' || filters.viewMode === 'pixels') && (
           <div>
             <label className="block text-xs font-mono text-white/30 uppercase tracking-widest mb-2">Metric</label>
             <div className="flex flex-col gap-1.5">
@@ -149,6 +149,22 @@ export default function MapSidebar({ filters, onChange, totalPoints, liveCount }
           </div>
         </div>
 
+        {/* Include Baseline */}
+        <div>
+          <label className="block text-xs font-mono text-white/30 uppercase tracking-widest mb-2">Data</label>
+          <button
+            onClick={() => onChange({ ...filters, includeBaseline: !filters.includeBaseline })}
+            className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-mono transition-all border ${
+              filters.includeBaseline
+                ? 'bg-signal-green/15 border-signal-green/50 text-signal-green'
+                : 'bg-white/3 border-white/10 text-white/40 hover:text-white/70 hover:border-white/20'
+            }`}
+          >
+            <div className={`w-1.5 h-1.5 rounded-full ${filters.includeBaseline ? 'bg-signal-green' : 'bg-white/20'}`} />
+            Include Ookla baseline
+          </button>
+        </div>
+
         {/* Divider */}
         <div className="border-t border-white/5" />
 
@@ -159,8 +175,9 @@ export default function MapSidebar({ filters, onChange, totalPoints, liveCount }
             networkType: '',
             period: 'all',
             timeOfDay: '',
+            includeBaseline: true,
             heatMetric: 'downloadMbps',
-            viewMode: 'heatmap',
+            viewMode: 'pixels',
           })}
           className="w-full py-2 rounded-lg text-xs font-mono text-white/30 hover:text-white/60 border border-white/5 hover:border-white/15 transition-all"
         >

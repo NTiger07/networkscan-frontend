@@ -22,6 +22,7 @@ export async function fetchHeatmapData(filters: Partial<MapFilters>): Promise<He
   if (filters.networkType) params.set('networkType', filters.networkType)
   if (filters.period) params.set('period', filters.period)
   if (filters.timeOfDay) params.set('timeOfDay', filters.timeOfDay)
+  if (filters.includeBaseline !== undefined) params.set('includeBaseline', String(filters.includeBaseline))
 
   const res = await fetch(`${BASE}/tests/heatmap?${params}`)
   if (!res.ok) throw new Error(`Fetch failed: ${res.status}`)
@@ -37,6 +38,22 @@ export async function fetchStats(filters: Partial<MapFilters>) {
   const res = await fetch(`${BASE}/tests/stats?${params}`)
   if (!res.ok) throw new Error(`Stats failed: ${res.status}`)
   return res.json()
+}
+
+export async function fetchBaselineStats() {
+  const res = await fetch(`${BASE}/tests/baseline-stats`)
+  if (!res.ok) throw new Error(`Baseline stats failed: ${res.status}`)
+  return res.json()
+}
+
+export async function checkHealth() {
+  try {
+    const res = await fetch(`${BASE}/tests/health`)
+    if (!res.ok) return false
+    return true
+  } catch {
+    return false
+  }
 }
 
 export async function detectProvider(): Promise<{ provider: string; networkType: string }> {
