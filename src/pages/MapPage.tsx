@@ -14,12 +14,8 @@ import { fetchHeatmapData, fetchStats } from '../lib/api'
 import type { HeatmapPoint, MapFilters, SpeedTestRecord } from '../lib/types'
 
 const DEFAULT_FILTERS: MapFilters = {
-  providers: [],
-  networkType: '',
-  period: 'all',
-  timeOfDay: '',
+  providers: ['MTN'],
   includeBaseline: true,
-  heatMetric: 'downloadMbps',
   viewMode: 'pixels',
 }
 
@@ -75,9 +71,8 @@ export default function MapPage() {
     // Only add if it matches current filters
     const f = filtersRef.current
     const providerOk = f.providers.length === 0 || f.providers.includes(test.provider)
-    const typeOk = !f.networkType || test.networkType === f.networkType
 
-    if (providerOk && typeOk) {
+    if (providerOk) {
       setPoints((prev) => [newPoint, ...prev])
       toast.success(`New test: ${test.provider} · ${test.networkType}`, {
         description: `↓ ${test.downloadMbps} Mbps · ↑ ${test.uploadMbps} Mbps · ${test.pingMs}ms`,
@@ -176,10 +171,10 @@ export default function MapPage() {
 
             {/* Data layers */}
             {filters.viewMode === 'heatmap' && (
-              <HeatmapLayer points={points} metric={filters.heatMetric} />
+              <HeatmapLayer points={points} metric="downloadMbps" />
             )}
             {filters.viewMode === 'pixels' && (
-              <PixelGridLayer points={points} metric={filters.heatMetric} />
+              <PixelGridLayer points={points} />
             )}
 
             {/* My location control */}

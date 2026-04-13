@@ -1,4 +1,4 @@
-export type Provider = 'MTN' | 'Glo' | 'Airtel' | '9mobile' | 'Unknown'
+export type Provider = 'MTN' | 'Glo' | 'Airtel' | 'T2' | 'Unknown'
 export type NetworkType = '4G' | '5G' | 'Unknown'
 
 export interface SpeedTestResult {
@@ -33,20 +33,16 @@ export interface HeatmapPoint {
 
 export interface MapFilters {
   providers: string[]
-  networkType: string  // '' | '4G' | '5G'
-  period: string       // '24h' | '7d' | 'all'
-  timeOfDay: string    // '' | 'morning' | 'afternoon' | 'evening' | 'night'
   includeBaseline: boolean
-  heatMetric: 'downloadMbps' | 'uploadMbps' | 'pingMs'
   viewMode: 'heatmap' | 'pixels'
 }
 
-export const PROVIDERS: Provider[] = ['MTN', 'Glo', 'Airtel', '9mobile']
+export const PROVIDERS: Provider[] = ['MTN', 'Glo', 'Airtel', 'T2']
 
 export const PROVIDER_COLORS: Record<string, string> = {
   MTN: '#ffb800',
   Glo: '#00cc44',
   Airtel: '#ff2222',
-  '9mobile': '#009966',
+  T2: '#009966',
   Unknown: '#888888',
 }

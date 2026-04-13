@@ -19,9 +19,6 @@ export async function submitTest(payload: {
 export async function fetchHeatmapData(filters: Partial<MapFilters>): Promise<HeatmapPoint[]> {
   const params = new URLSearchParams()
   if (filters.providers?.length) params.set('providers', filters.providers.join(','))
-  if (filters.networkType) params.set('networkType', filters.networkType)
-  if (filters.period) params.set('period', filters.period)
-  if (filters.timeOfDay) params.set('timeOfDay', filters.timeOfDay)
   if (filters.includeBaseline !== undefined) params.set('includeBaseline', String(filters.includeBaseline))
 
   const res = await fetch(`${BASE}/tests/heatmap?${params}`)
@@ -32,8 +29,6 @@ export async function fetchHeatmapData(filters: Partial<MapFilters>): Promise<He
 export async function fetchStats(filters: Partial<MapFilters>) {
   const params = new URLSearchParams()
   if (filters.providers?.length) params.set('providers', filters.providers.join(','))
-  if (filters.networkType) params.set('networkType', filters.networkType)
-  if (filters.period) params.set('period', filters.period)
 
   const res = await fetch(`${BASE}/tests/stats?${params}`)
   if (!res.ok) throw new Error(`Stats failed: ${res.status}`)
@@ -68,7 +63,7 @@ export async function detectProvider(): Promise<{ provider: string; networkType:
     if (org.includes('mtn')) provider = 'MTN'
     else if (org.includes('glo') || org.includes('globacom')) provider = 'Glo'
     else if (org.includes('airtel') || org.includes('bharti')) provider = 'Airtel'
-    else if (org.includes('9mobile') || org.includes('emts') || org.includes('etisalat')) provider = '9mobile'
+    else if (org.includes('t2') || org.includes('emts') || org.includes('etisalat')) provider = 'T2'
 
     // navigator.connection for network type hint
     const conn = (navigator as any).connection
