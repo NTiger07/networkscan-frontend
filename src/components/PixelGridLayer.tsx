@@ -28,18 +28,18 @@ const NIGERIA_LNG_MAX = 14.6
 
 // Cell size by zoom level (in degrees)
 const CELL_SIZE_BY_ZOOM: Record<number, number> = {
-  5: 1.0,   // Zoomed out: ~110km squares
-  6: 0.8,   // ~88km
-  7: 0.5,   // ~55km
-  8: 0.35,  // ~38km
-  9: 0.25,  // ~27km
-  10: 0.15, // ~16km
-  11: 0.1,  // ~11km
-  12: 0.08, // ~8km
-  13: 0.05, // ~5km
-  14: 0.03, // ~3km
-  15: 0.02, // ~2km
-  16: 0.01, // ~1km
+  5: 0.3,    // Zoomed out: ~33km squares
+  6: 0.25,   // ~27km
+  7: 0.15,   // ~16km
+  8: 0.12,   // ~13km
+  9: 0.08,   // ~8km
+  10: 0.05,  // ~5km
+  11: 0.03,  // ~3km
+  12: 0.02,  // ~2km
+  13: 0.012, // ~1.3km
+  14: 0.008, // ~800m
+  15: 0.005, // ~550m
+  16: 0.003, // ~300m
 }
 
 function getColor(value: number): string {
