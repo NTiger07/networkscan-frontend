@@ -57,13 +57,15 @@ export async function detectProvider(): Promise<{ provider: string; networkType:
       signal: AbortSignal.timeout(4000),
     })
     const data = await res.json()
-    const org: string = (data.org || data.isp || '').toLowerCase()
+
+    // Check both org and isp independently — org may be an upstream ASN that doesn't name the carrier
+    const haystack = `${data.org || ''} ${data.isp || ''}`.toLowerCase()
 
     let provider = 'Unknown'
-    if (org.includes('mtn')) provider = 'MTN'
-    else if (org.includes('glo') || org.includes('globacom')) provider = 'Glo'
-    else if (org.includes('airtel') || org.includes('bharti')) provider = 'Airtel'
-    else if (org.includes('t2') || org.includes('emts') || org.includes('etisalat')) provider = 'T2'
+    if (haystack.includes('mtn')) provider = 'MTN'
+    else if (haystack.includes('glo') || haystack.includes('globacom')) provider = 'Glo'
+    else if (haystack.includes('airtel') || haystack.includes('bharti')) provider = 'Airtel'
+    else if (haystack.includes('9mobile') || haystack.includes('emts') || haystack.includes('etisalat') || haystack.includes('t2')) provider = '9mobile'
 
     // navigator.connection for network type hint
     const conn = (navigator as any).connection
@@ -71,8 +73,11 @@ export async function detectProvider(): Promise<{ provider: string; networkType:
     if (conn?.effectiveType) {
       const et = conn.effectiveType
       if (et === '4g') networkType = '4G'
-      else if (et === '5g') networkType = '5G'
+      else if (et === '3g') networkType = '3G'
+      else if (et === '2g' || et === 'slow-2g') networkType = '2G'
     }
+    // fall back to mobile flag if effectiveType wasn't useful
+    if (networkType === 'Unknown' && data.mobile === true) networkType = 'Mobile'
 
     return { provider, networkType }
   } catch {
